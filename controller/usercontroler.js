@@ -6,7 +6,8 @@ require('dotenv').config();
 exports.createUsers= async (req, res) => {
     try {
       const { role, full_name, ID,  email, password } = req.body;
-      const query = `INSERT INTO users (ID,role, full_name,  email, password) VALUES ('${password}','${ID}','${role}','${full_name}','${email}')`;
+      const hashedPassword = await bcrypt.hash(password, 10); 
+      const query = `INSERT INTO users (role, full_name,  email, password) VALUES ('${password}','${ID}','${role}','${full_name}','${email}',${hashedPassword})`;
       const [result] = await connection.promise().query(query);
       rest.status(200).json(result)
      

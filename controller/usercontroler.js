@@ -5,11 +5,11 @@ require('dotenv').config();
 
 exports.createUsers= async (req, res) => {
     try {
-      const { role, full_name, ID,  email, password } = req.body;
+      const { role, full_name,  email, password } = req.body;
       const hashedPassword = await bcrypt.hash(password, 10); 
-      const query = `INSERT INTO users (role, full_name,  email, password) VALUES ('${password}','${ID}','${role}','${full_name}','${email}',${hashedPassword})`;
+      const query = `INSERT INTO users (role, full_name,  email, password) VALUES ('${role}','${full_name}','${email}','${hashedPassword}')`;
       const [result] = await connection.promise().query(query);
-      rest.status(200).json(result)
+      res.status(200).json(result)
      
     } catch (error) {
       console.error('Error adding user:', error);
@@ -34,6 +34,9 @@ exports.getUsersbyId = async (req, res) => {
         const Id= req.params.Id;
       const query = `SELECT * FROM users WHERE Id= ${Id}`;
       const [result] = await connection.promise().query(query);
+      if ( result.length==0){ res.status(500).json({message : "ID not exist" });
+ 
+}
       res.status(200).json(result);
     } catch (error) {
       console.log(error);

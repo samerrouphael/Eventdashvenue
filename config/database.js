@@ -6,7 +6,7 @@ const connection = mysql.createPool({
   password: process.env.PASSWORD,
   database: process.env.DB_NAME
 });
-
+/*
 const createUsersQuery = `CREATE TABLE IF NOT EXISTS users (
     Id INT AUTO_INCREMENT PRIMARY KEY,
     role VARCHAR(10),
@@ -82,5 +82,5 @@ connection.promise().query(createReservationQuery)
   .catch((error) => {
     console.error(`Error creating table Reservation:`, error);
   });
-
+*/
   module.exports = connection;

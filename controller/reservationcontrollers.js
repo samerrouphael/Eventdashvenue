@@ -3,10 +3,10 @@ require('dotenv').config();
 
 exports.createReservation = async (req, res) => {
     try {
-      const { Id ,EventID,UserID } = req.body;
-      const query = `INSERT INTO users (Id ,EventID,UserID) VALUES ('${UserID}','${Id}','${EventID}',)`;
+      const {EventID,UserID } = req.body;
+      const query = `INSERT INTO reservation (EventID,UserID) VALUES (${EventID},${UserID})`;
       const [result] = await connection.promise().query(query);
-      rest.status(200).json(result)
+      res.status(200).json(result)
      
     } catch (error) {
       console.error('Error adding user:', error);

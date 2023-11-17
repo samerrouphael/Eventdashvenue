@@ -3,10 +3,10 @@ require('dotenv').config();
 
 exports.createEvent = async (req, res) => {
     try {
-      const { Id, Title, date, Ticket, Description, Venue_Id } = req.body;
-      const query = `Id, Title, date, Ticket, Description, Venue_Id) VALUES ('${Title}','${Id}','${date}','${Ticket}','${Venue_Id}','${Description}')`;
+      const {Title, date, Ticket, Description, Venue_Id } = req.body;
+      const query = `INSERT INTO events (Title, date, TicketPrice, Description, Venue_ID) VALUES ('${Title}','${date}',${Ticket},'${Description}',${Venue_Id})`;
       const [result] = await connection.promise().query(query);
-      rest.status(200).json(result)
+      res.status(200).json(result)
      
     } catch (error) {
       console.error('Error adding user:', error);

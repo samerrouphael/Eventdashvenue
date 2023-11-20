@@ -3,8 +3,8 @@ require('dotenv').config();
 
 exports.createEvent = async (req, res) => {
     try {
-      const {Title, date, Ticket, Description, Venue_Id } = req.body;
-      const query = `INSERT INTO events (Title, date, TicketPrice, Description, Venue_ID) VALUES ('${Title}','${date}',${Ticket},'${Description}',${Venue_Id})`;
+      const {Title, date, TicketPrice, Description, Venue_ID } = req.body;
+      const query = `INSERT INTO events (Title,date,TicketPrice,Description,Venue_ID) VALUES ('${Title}','${date}',${TicketPrice},'${Description}',${Venue_ID})`;
       const [result] = await connection.promise().query(query);
       res.status(200).json(result)
      
@@ -17,11 +17,11 @@ exports.createEvent = async (req, res) => {
   // HON AAM BAAML GET 
 exports.getAllEvent = async (req, res) => {
   try {
-    const query = "SELECT * FROM Event";
+    const query = "SELECT * FROM events";
     const [result] = await connection.promise().query(query);
     res.status(200).json(result);
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
     res.status(500).json({ error: "An error occurred" });
   }
 };
@@ -29,7 +29,7 @@ exports.getAllEvent = async (req, res) => {
 exports.getEventbyID = async (req, res) => {
     try {
         const Id= req.params.Id;
-      const query = `SELECT * FROM Event WHERE Id= ${Id}`;
+      const query = `SELECT * FROM events WHERE Id= ${Id}`;
       const [result] = await connection.promise().query(query);
       res.status(200).json(result);
     } catch (error) {
@@ -41,7 +41,7 @@ exports.getEventbyID = async (req, res) => {
   exports.deleteEventbyId = async (req, res) => {
     const Id = req.params.Id;
     try {
-      const query = `DELETE FROM Event WHERE Id=${Id}`;
+      const query = `DELETE FROM events WHERE Id=${Id}`;
       const [result] = await connection.promise().query(query);
       res.status(200).json(result);
     } catch (error) {
@@ -56,7 +56,7 @@ exports.getEventbyID = async (req, res) => {
     const Venue_Id = req.body.Venue_Id;
     const date = req.body.date;
     try {
-      const query = `UPDATE Event SET Ticket = '${Ticket}', Description = '${Description}', Venue_Id = '${Venue_Id}', date = '${date}' WHERE Id=${Id}`;
+      const query = `UPDATE events SET Ticket = '${Ticket}', Description = '${Description}', Venue_Id = '${Venue_Id}', date = '${date}' WHERE Id=${Id}`;
       const [result] = await connection.promise().query(query);
       res.status(200).json(result);
     } catch (error) {
